@@ -91,13 +91,14 @@ app.post('/api/leads', async (req, res) => {
   }
 });
 
-const ADMIN_USER = process.env.ADMIN_USERNAME || 'admin';
-const ADMIN_PASS = process.env.ADMIN_PASSWORD || 'VelmiDlouheAHodnetajneHesloProAdmina2026!!!';
 const SECRET_TOKEN = 'super-secret-admin-token-987654321';
 
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
-  if (username === ADMIN_USER && password === ADMIN_PASS) {
+  const expectedUser = process.env.ADMIN_USERNAME || 'admin';
+  const expectedPass = process.env.ADMIN_PASSWORD || 'VelmiDlouheAHodnetajneHesloProAdmina2026!!!';
+  
+  if (username === expectedUser && password === expectedPass) {
     res.json({ success: true, token: SECRET_TOKEN });
   } else {
     res.status(401).json({ error: 'Neplatné přihlašovací údaje.' });
