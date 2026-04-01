@@ -73,9 +73,9 @@ app.post('/api/leads', async (req, res) => {
     // Odeslání e-mailu
     try {
       await transporter.sendMail({
-        from: process.env.SMTP_FROM || '"Lead Systém" <no-reply@example.com>',
-        to: 'ludvikremesekwork@gmail.com',
-        subject: 'Nový lead z webu!',
+        from: process.env.SMTP_FROM || '"Optiva Lead" <info@optiva.cz>',
+        to: process.env.SMTP_TO || 'info@optiva.cz',
+        subject: 'Nový lead z webu Optiva!',
         text: `Nová poptávka:\n\nJméno: ${name}\nTelefon: ${phone}\nSlužby: ${services}\nAktuálně platí: ${currentPrice || 'Nezadáno'}\nČas: ${new Date().toLocaleString('cs-CZ')}`,
       });
       console.log('E-mail úspěšně odeslán.');
