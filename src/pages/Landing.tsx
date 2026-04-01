@@ -6,6 +6,7 @@ import { cn } from '../lib/utils';
 export default function Landing() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
   const [services, setServices] = useState<string[]>(['Internet']);
   const [currentPrice, setCurrentPrice] = useState('');
   const [submitted, setSubmitted] = useState(false);
@@ -33,7 +34,7 @@ export default function Landing() {
       const res = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, phone, services: services.join(', '), currentPrice }),
+        body: JSON.stringify({ name, phone, email, services: services.join(', '), currentPrice }),
       });
 
       if (res.ok) {
@@ -183,6 +184,21 @@ export default function Landing() {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Např. Jan Novák"
+                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                      E-mail (pro zaslání potvrzení)
+                    </label>
+                    <input
+                      id="email"
+                      type="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="jan.novak@email.cz"
                       className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
                     />
                   </div>

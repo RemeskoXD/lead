@@ -45,6 +45,13 @@ try {
   // Sloupec už pravděpodobně existuje
 }
 
+// Přidání sloupce email, pokud ještě neexistuje
+try {
+  db.exec("ALTER TABLE leads ADD COLUMN email TEXT DEFAULT ''");
+} catch (e) {
+  // Sloupec už pravděpodobně existuje
+}
+
 // Nastavení e-mailového klienta (Nodemailer)
 // Pro produkci doplňte SMTP údaje do .env souboru
 const transporter = nodemailer.createTransport({
@@ -59,7 +66,7 @@ const transporter = nodemailer.createTransport({
 
 // API endpoint pro uložení leadu
 app.post('/api/leads', async (req, res) => {
-  const { name, phone, services, currentPrice } = req.body;
+  const { name, phone, email, services, currentPrice } = req.body;
   
   if (!name || !phone) {
     return res.status(400).json({ error: 'Jméno a telefon jsou povinné.' });
@@ -67,21 +74,60 @@ app.post('/api/leads', async (req, res) => {
 
   try {
     // Uložení do databáze
-    const stmt = db.prepare('INSERT INTO leads (name, phone, service, current_price) VALUES (?, ?, ?, ?)');
-    const info = stmt.run(name, phone, services || 'Nezadáno', currentPrice || 'Nezadáno');
+    const stmt = db.prepare('INSERT INTO leads (name, phone, email, service, current_price) VALUES (?, ?, ?, ?, ?)');
+    const info = stmt.run(name, phone, email || '', services || 'Nezadáno', currentPrice || 'Nezadáno');
 
-    // Odeslání e-mailu
+    // Odeslání e-mailu administrátorovi
     try {
       await transporter.sendMail({
         from: process.env.SMTP_FROM || '"Optiva Lead" <info@optiva.cz>',
         to: process.env.SMTP_TO || 'info@optiva.cz',
         subject: 'Nový lead z webu Optiva!',
-        text: `Nová poptávka:\n\nJméno: ${name}\nTelefon: ${phone}\nSlužby: ${services}\nAktuálně platí: ${currentPrice || 'Nezadáno'}\nČas: ${new Date().toLocaleString('cs-CZ')}`,
+        text: `Nová poptávka:\n\nJméno: ${name}\nTelefon: ${phone}\nE-mail: ${email || 'Nezadáno'}\nSlužby: ${services}\nAktuálně platí: ${currentPrice || 'Nezadáno'}\nČas: ${new Date().toLocaleString('cs-CZ')}`,
       });
-      console.log('E-mail úspěšně odeslán.');
+      console.log('E-mail adminovi úspěšně odeslán.');
     } catch (emailErr) {
-      console.error('Chyba při odesílání e-mailu:', emailErr);
-      // Nechceme, aby selhání e-mailu zablokovalo uložení leadu
+      console.error('Chyba při odesílání e-mailu adminovi:', emailErr);
+    }
+
+    // Odeslání potvrzovacího e-mailu zákazníkovi
+    if (email) {
+      try {
+        await transporter.sendMail({
+          from: process.env.SMTP_FROM || '"Optiva" <info@optiva.cz>',
+          to: email,
+          subject: 'Potvrzení přijetí poptávky - Optiva',
+          html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333; line-height: 1.6;">
+              <div style="background-color: #1e3a8a; padding: 20px; text-align: center; border-radius: 8px 8px 0 0;">
+                <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Optiva</h1>
+              </div>
+              <div style="padding: 30px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 8px 8px;">
+                <h2 style="color: #1e3a8a; margin-top: 0;">Dobrý den, ${name},</h2>
+                <p>děkujeme za Vaši poptávku. Úspěšně jsme ji přijali a brzy se Vám ozveme s návrhem řešení, jak ušetřit na telekomunikačních službách.</p>
+                
+                <div style="background-color: #f3f4f6; padding: 15px; border-radius: 6px; margin: 20px 0;">
+                  <h3 style="margin-top: 0; color: #4b5563; font-size: 16px;">Shrnutí Vaší poptávky:</h3>
+                  <ul style="margin: 0; padding-left: 20px; color: #4b5563;">
+                    <li><strong>Služby:</strong> ${services || 'Nezadáno'}</li>
+                    <li><strong>Aktuální měsíční útrata:</strong> ${currentPrice || 'Nezadáno'}</li>
+                    <li><strong>Telefon:</strong> ${phone}</li>
+                  </ul>
+                </div>
+                
+                <p>Naši specialisté nyní analyzují aktuální nabídky na trhu, aby pro Vás našli to nejlepší řešení.</p>
+                <p>S pozdravem,<br><strong>Tým Optiva</strong></p>
+              </div>
+              <div style="text-align: center; margin-top: 20px; color: #9ca3af; font-size: 12px;">
+                Toto je automaticky generovaný e-mail, prosím neodpovídejte na něj.
+              </div>
+            </div>
+          `
+        });
+        console.log('Potvrzovací e-mail zákazníkovi úspěšně odeslán.');
+      } catch (customerEmailErr) {
+        console.error('Chyba při odesílání e-mailu zákazníkovi:', customerEmailErr);
+      }
     }
 
     res.json({ success: true, id: info.lastInsertRowid });
