@@ -49,7 +49,7 @@ export default function Landing() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans text-gray-900">
+    <div className="min-h-screen bg-gray-50 font-sans text-gray-900 overflow-x-hidden">
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center">
@@ -61,35 +61,35 @@ export default function Landing() {
       <main className="max-w-6xl mx-auto px-4 py-12 md:py-20 grid md:grid-cols-2 gap-12 items-center">
         
         {/* Left Column: Copy */}
-        <div className="space-y-8">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-blue-900 leading-tight">
+        <div className="space-y-6 md:space-y-8">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-blue-900 leading-tight">
             PLATÍTE ZA INTERNET VÍC, NEŽ MUSÍTE?
           </h1>
           
-          <p className="text-lg md:text-xl text-gray-600 font-medium leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 font-medium leading-relaxed">
             Najdeme pro vás ty <strong>nejlevnější služby v telekomunikacích</strong>. Ať už hledáte levný <strong>internet</strong>, <strong>televizi</strong> nebo výhodný <strong>tarif</strong>, srovnáme nabídky a ušetříme vám peníze.
           </p>
           
-          <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-8 pt-4">
-            <ul className="space-y-4 text-lg md:text-xl text-gray-700 font-medium">
+          <div className="flex flex-col-reverse sm:flex-row items-center sm:items-end justify-between gap-6 sm:gap-8 pt-2 sm:pt-4">
+            <ul className="space-y-3 sm:space-y-4 text-base sm:text-lg md:text-xl text-gray-700 font-medium w-full sm:w-auto">
               <li className="flex items-center gap-3">
-                <Check className="text-green-600 w-6 h-6 flex-shrink-0" strokeWidth={3} />
+                <Check className="text-green-600 w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" strokeWidth={3} />
                 Ušetříme vám až 3 000 Kč ročně
               </li>
               <li className="flex items-center gap-3">
-                <Check className="text-green-600 w-6 h-6 flex-shrink-0" strokeWidth={3} />
+                <Check className="text-green-600 w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" strokeWidth={3} />
                 Zabere to 30 sekund
               </li>
               <li className="flex items-center gap-3">
-                <ShieldCheck className="text-green-600 w-6 h-6 flex-shrink-0" strokeWidth={2.5} />
+                <ShieldCheck className="text-green-600 w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" strokeWidth={2.5} />
                 Spolupracujeme se všemi operátory
               </li>
               <li className="flex items-center gap-3">
-                <Check className="text-green-600 w-6 h-6 flex-shrink-0" strokeWidth={3} />
+                <Check className="text-green-600 w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" strokeWidth={3} />
                 Zdarma a nezávazně
               </li>
               <li className="flex items-center gap-3">
-                <Users className="text-green-600 w-6 h-6 flex-shrink-0" strokeWidth={2.5} />
+                <Users className="text-green-600 w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" strokeWidth={2.5} />
                 Už 12 000+ spokojených klientů
               </li>
             </ul>
@@ -97,7 +97,7 @@ export default function Landing() {
             <img 
               src="https://web2.itnahodinu.cz/lead/sova.webp" 
               alt="Moudrá sova Optiva" 
-              className="hidden md:block w-48 lg:w-56 h-auto object-contain -mr-8 lg:-mr-12"
+              className="w-32 sm:w-48 lg:w-56 h-auto object-contain sm:-mr-8 lg:-mr-12 mb-4 sm:mb-0"
               referrerPolicy="no-referrer"
             />
           </div>
@@ -108,7 +108,7 @@ export default function Landing() {
           {/* Decorative background shape */}
           <div className="absolute -inset-4 bg-blue-100/50 rounded-3xl transform rotate-3 -z-10"></div>
           
-          <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-gray-100 relative z-10">
+          <div className="bg-white rounded-2xl shadow-xl p-5 sm:p-6 md:p-8 border border-gray-100 relative z-10">
             {submitted ? (
               <div className="text-center py-12 space-y-4">
                 <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -257,13 +257,13 @@ export default function Landing() {
           {/* Calculator */}
           <div className="bg-gradient-to-br from-blue-900 to-blue-800 rounded-3xl shadow-2xl overflow-hidden">
             <div className="grid md:grid-cols-2">
-              <div className="p-8 md:p-12 text-white flex flex-col justify-center">
-                <h3 className="text-3xl font-bold mb-4">Kalkulačka úspor</h3>
-                <p className="text-blue-200 mb-8 text-lg">Spočítejte si, kolik peněz vám doslova protéká mezi prsty. Naši klienti průměrně ušetří 30 % ze svých stávajících výdajů.</p>
+              <div className="p-6 sm:p-8 md:p-12 text-white flex flex-col justify-center">
+                <h3 className="text-2xl sm:text-3xl font-bold mb-4">Kalkulačka úspor</h3>
+                <p className="text-blue-200 mb-8 text-base sm:text-lg">Spočítejte si, kolik peněz vám doslova protéká mezi prsty. Naši klienti průměrně ušetří 30 % ze svých stávajících výdajů.</p>
                 
                 <div className="space-y-6">
                   <div>
-                    <div className="flex justify-between mb-2">
+                    <div className="flex flex-col sm:flex-row justify-between mb-4 sm:mb-2 gap-2 sm:gap-0">
                       <label className="font-medium text-blue-100">Vaše současná měsíční útrata</label>
                       <span className="font-bold text-xl">{calcMonthly} Kč</span>
                     </div>
@@ -284,18 +284,18 @@ export default function Landing() {
                 </div>
               </div>
               
-              <div className="bg-white p-8 md:p-12 flex flex-col justify-center">
-                <div className="space-y-8">
-                  <div className="text-center p-6 bg-green-50 rounded-2xl border border-green-100">
-                    <div className="text-sm font-bold text-green-600 uppercase tracking-wider mb-1">Úspora za 1 rok</div>
-                    <div className="text-4xl font-extrabold text-gray-900">
+              <div className="bg-white p-6 sm:p-8 md:p-12 flex flex-col justify-center">
+                <div className="space-y-6 sm:space-y-8">
+                  <div className="text-center p-5 sm:p-6 bg-green-50 rounded-2xl border border-green-100">
+                    <div className="text-xs sm:text-sm font-bold text-green-600 uppercase tracking-wider mb-1">Úspora za 1 rok</div>
+                    <div className="text-3xl sm:text-4xl font-extrabold text-gray-900">
                       cca {Math.round(calcMonthly * 0.30 * 12).toLocaleString('cs-CZ')} Kč
                     </div>
                   </div>
                   
-                  <div className="text-center p-6 bg-blue-50 rounded-2xl border border-blue-100">
-                    <div className="text-sm font-bold text-blue-600 uppercase tracking-wider mb-1">Úspora za 5 let</div>
-                    <div className="text-5xl font-extrabold text-blue-900">
+                  <div className="text-center p-5 sm:p-6 bg-blue-50 rounded-2xl border border-blue-100">
+                    <div className="text-xs sm:text-sm font-bold text-blue-600 uppercase tracking-wider mb-1">Úspora za 5 let</div>
+                    <div className="text-4xl sm:text-5xl font-extrabold text-blue-900">
                       cca {Math.round(calcMonthly * 0.30 * 60).toLocaleString('cs-CZ')} Kč
                     </div>
                   </div>
