@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Check, Search, ShieldCheck, Users } from 'lucide-react';
+import { Check, Search, ShieldCheck, Users, Phone } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 export default function Landing() {
@@ -53,8 +53,12 @@ export default function Landing() {
     <div className="min-h-screen bg-gray-50 font-sans text-gray-900 overflow-x-hidden">
       {/* Header */}
       <header className="bg-white shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="text-2xl font-bold text-blue-800 tracking-tight">Optiva</div>
+          <a href="tel:+420603322253" className="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors font-medium">
+            <Phone className="w-5 h-5" />
+            <span className="hidden sm:inline">+420 603 322 253</span>
+          </a>
         </div>
       </header>
 
@@ -346,10 +350,16 @@ export default function Landing() {
 
       {/* Footer / Logos */}
       <footer className="bg-white border-t border-gray-100 py-10 mt-auto">
-        <div className="max-w-6xl mx-auto px-4 flex flex-wrap justify-center items-center gap-8 md:gap-16 text-gray-400 font-bold uppercase tracking-wider text-sm md:text-base">
-          <div className="hover:text-gray-600 transition-colors cursor-default">Operátoři</div>
-          <div className="hover:text-gray-600 transition-colors cursor-default">Lokální poskytovatelé</div>
-          <div className="hover:text-gray-600 transition-colors cursor-default">Zahraniční poskytovatelé</div>
+        <div className="max-w-6xl mx-auto px-4 flex flex-col items-center gap-6">
+          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 text-gray-400 font-bold uppercase tracking-wider text-sm md:text-base">
+            <div className="hover:text-gray-600 transition-colors cursor-default">Operátoři</div>
+            <div className="hover:text-gray-600 transition-colors cursor-default">Lokální poskytovatelé</div>
+            <div className="hover:text-gray-600 transition-colors cursor-default">Zahraniční poskytovatelé</div>
+          </div>
+          <div className="flex items-center gap-2 text-gray-500">
+            <Phone className="w-4 h-4" />
+            <a href="tel:+420603322253" className="hover:text-blue-600 transition-colors font-medium">+420 603 322 253</a>
+          </div>
         </div>
       </footer>
     </div>
